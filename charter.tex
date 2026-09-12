@@ -20,7 +20,7 @@
 
 % El nombre del director y co-director, se puede usar el cualquier lugar del documento con el comando \supname y \cosupname y \pertesupname y \pertecosupname
 \director{Esp. Ing. Gerardo Alexis Vilcamiza Espinoza}
-\pertenenciaDirector{Docente FIUBA} 
+\pertenenciaDirector{FIUBA} 
 \codirector{} % para que aparezca en la portada se debe descomentar la opción codirector en los parámetros de documentclass
 \pertenenciaCoDirector{FIUBA}
 
@@ -30,7 +30,7 @@
 
 \fechaINICIO{24 de agosto de 2026}		%Fecha de inicio de la cursada de GdP \fechaInicioName
 \fechaFINALPlan{18 de octubre de 2026} 	%Fecha de final de cursada de GdP
-\fechaFINALTrabajo{XX de XXXX de 2027}	%Fecha de defensa pública del trabajo final
+\fechaFINALTrabajo{5 de abril de 2027}	%Fecha de defensa pública del trabajo final
 
 
 \begin{document}
@@ -106,15 +106,15 @@
 	\section{1. Descripción técnica-conceptual del proyecto a realizar}
 	\label{sec:descripcion}
 	
-	El monitoreo de signos vitales constituye una fuente de información fundamental para evaluar el estado de salud y bienestar de una persona. Entre estos signos, se encuentran la frecuencia cardíaca y la frecuencia respiratoria. Tradicionalmente, esta medición requiere sensores en contacto directo con la piel (electrodos, oxímetros de dedo, bandas pectorales), lo cual limita su uso en escenarios donde el contacto físico es incómodo, poco práctico o directamente imposible. Un ejemplo de esta situación es una consulta de telemedicina, en la que el profesional de la salud no tiene contacto físico con su paciente y, por lo tanto, no puede recurrir al instrumental habitual de un consultorio presencial.
+	El monitoreo de signos vitales constituye una fuente de información fundamental para evaluar el estado de salud y bienestar de una persona. Entre estos signos, se encuentran la frecuencia cardíaca y la frecuencia respiratoria. Tradicionalmente, esta medición requiere sensores en contacto directo con la piel (electrodos, oxímetros de dedo, bandas pectorales), lo que limita su uso en escenarios en que el contacto físico es incómodo, poco práctico o directamente imposible. Un ejemplo de esta situación es una consulta de telemedicina, en la que el profesional de la salud no tiene contacto físico con su paciente y, por lo tanto, no puede recurrir al instrumental habitual de un consultorio presencial.
 	
 	En los últimos años, la fotopletismografía remota (\textit{remote photoplethysmography}, rPPG) surgió como una alternativa \textit{contactless} que permite estimar signos vitales a partir de video. Esta técnica aprovecha las variaciones sutiles e imperceptibles al ojo humano en el color de la piel que produce el flujo sanguíneo sincronizado con el ciclo cardíaco. Los primeros trabajos en esta línea utilizaban técnicas clásicas de procesamiento de señales (separación ciega de fuentes, filtrado de color) para extraer esta información a partir de video facial. El avance del \textit{deep learning} aplicado a visión por computadora amplió significativamente la robustez de estas técnicas frente a los métodos clásicos, con arquitecturas como DeepPhys (redes convolucionales con mecanismos de atención) o PhysNet (redes 3D espacio-temporales). A pesar de estos avances, todavía persisten desafíos relevantes: artefactos de movimiento, variaciones de iluminación, diferencias en el tono de piel y una brecha de rendimiento entre condiciones controladas de laboratorio y escenarios de uso reales.
 	
-	Este proyecto surge en el marco del posgrado, como un trabajo individual de carácter exploratorio y aplicado, sin financiamiento externo ni acuerdos de confidencialidad asociados. La propuesta de valor del proyecto consiste en ofrecer una alternativa de bajo costo y sin fricción para obtener una estimación de signos vitales durante una consulta remota, dado que solo requiere una cámara. Esto habitualmente ya se encuentra disponible en el dispositivo que el paciente utiliza para acceder a la consulta. Se distingue de las soluciones basadas en sensores de contacto, que dependen de instrumental específico y no siempre está disponible fuera de un entorno clínico. El principal interesado en este tipo de solución es el profesional de la salud que realiza consultas de telemedicina, así como las plataformas que dan soporte a esta modalidad de atención, quienes valoran contar con información objetiva del paciente.
+	Este proyecto surge como un trabajo individual de carácter exploratorio y aplicado, sin financiamiento externo ni acuerdos de confidencialidad asociados. La propuesta de valor del proyecto consiste en ofrecer una alternativa de bajo costo y sin fricción para obtener una estimación de signos vitales durante una consulta remota, dado que solo requiere una cámara. Esto habitualmente ya se encuentra disponible en el dispositivo que el paciente utiliza para acceder a la consulta. Se distingue de las soluciones basadas en sensores de contacto, que dependen de instrumental específico y no siempre está disponible fuera de un entorno clínico. El principal interesado en este tipo de solución es el profesional de la salud que realiza consultas de telemedicina, así como las plataformas que dan soporte a esta modalidad de atención, quienes valoran contar con información objetiva del paciente.
 	
-	El proyecto se encuentra en una etapa de prueba de concepto. En la misma, se busca validar la viabilidad técnica de estimar la frecuencia cardíaca a partir de video, y a partir de esa misma señal, obtener una estimación de la frecuencia respiratoria, comparando el desempeño de un enfoque clásico y uno basado en \textit{deep learning} sobre datasets públicos reconocidos en la literatura de rPPG. Estos enfoques serán contrastados con mediciones de referencia obtenidas con sensores de contacto.
+	El proyecto se encuentra en una etapa de prueba de concepto. En esta, se busca validar la viabilidad técnica de estimar la frecuencia cardíaca a partir de video, y a partir de esa misma señal, obtener una estimación de la frecuencia respiratoria. Para ello, se compara el desempeño de un enfoque clásico y uno basado en \textit{deep learning} sobre datasets públicos reconocidos en la literatura de rPPG. Estos enfoques serán contrastados con mediciones de referencia obtenidas con sensores de contacto.
 	
-	La solución propuesta toma como entrada un video del rostro de la persona, capturado con una cámara convencional, y produce como salida una estimación numérica de la frecuencia cardíaca y respiratoria, las cuales pueden contrastarse contra una medición de referencia. En la figura \ref{fig:diagBloques} se presenta el diagrama en bloques del sistema. Se observa que, en primer lugar, se realiza la detección facial y la selección de una región de interés (ROI) sobre el video de entrada. Luego, se extrae una única señal fisiológica (rPPG), ya sea mediante un pipeline clásico de procesamiento de imagen o mediante un modelo de \textit{deep learning} de tipo espacio-temporal. A continuación, dicha señal se filtra en dos bandas de frecuencia distintas, a partir de las cuales se estiman la frecuencia cardíaca y la frecuencia respiratoria (mediante análisis espectral o directamente a la salida del modelo). Finalmente, los valores estimados se comparan contra las mediciones de los sensores de referencia a los fines de validar el desempeño del sistema.
+	La solución propuesta toma como entrada un video del rostro de la persona capturado con una cámara convencional, y produce como salida una estimación numérica de la frecuencia cardíaca y respiratoria, que pueden contrastarse contra una medición de referencia. En la figura \ref{fig:diagBloques} se presenta el diagrama en bloques del sistema. Se observa que, en primer lugar, se realiza la detección facial y la selección de una región de interés (ROI) sobre el video de entrada. Luego, se extrae una única señal fisiológica (rPPG), ya sea mediante un pipeline clásico de procesamiento de imagen o mediante un modelo de \textit{deep learning} de tipo espacio-temporal. A continuación, dicha señal se filtra en dos bandas de frecuencia distintas, a partir de las cuales se estiman la frecuencia cardíaca y la frecuencia respiratoria (mediante análisis espectral o directamente a la salida del modelo). Finalmente, los valores estimados se comparan contra las mediciones de los sensores de referencia a los fines de validar el desempeño del sistema.
 	
 	\begin{figure}[htpb]
 		\centering 
@@ -145,7 +145,7 @@
 	\begin{itemize}
 		\item Cliente: valora contar con información objetiva y no invasiva del estado fisiológico del paciente durante una consulta remota, en un contexto donde hoy no dispone de instrumental de medición.
 		\item Orientador: colabora en la definición del alcance técnico del proyecto y en la validación de las decisiones metodológicas relacionadas con las técnicas de visión por computadora y \textit{deep learning} aplicadas.
-		\item Usuario final: el profesional de la salud valora la rapidez y la no invasividad de la medición; el paciente valora no depender de instrumental adicional ni de conocimientos técnicos para su uso.
+		\item Usuario final: el profesional de la salud valora la rapidez y la no invasividad de la medición, mientras que el paciente valora no depender de instrumental adicional ni de conocimientos técnicos para su uso.
 	\end{itemize}
 	
 	\section{3. Propósito del proyecto}
@@ -180,7 +180,7 @@
 	Para el desarrollo del presente proyecto se supone que:
 	
 	\begin{itemize}
-		\item Los datasets públicos utilizados (UBFC-rPPG, PURE) se encuentran disponibles y accesibles durante todo el desarrollo del proyecto.
+		\item Los datasets públicos a utilizar (UBFC-rPPG, PURE) se encuentran disponibles y accesibles durante todo el desarrollo del proyecto.
 		\item Se cuenta con el tiempo y los recursos de cómputo necesarios (incluyendo, de ser necesario, acceso a GPU) para entrenar y evaluar los modelos de \textit{deep learning} propuestos.
 		\item Las condiciones de captura de video consideradas (iluminación razonablemente estable, rostro visible y sin oclusiones significativas) son representativas de un escenario típico de videollamada o consulta de telemedicina.
 		\item El alcance del proyecto se limita a una prueba de concepto técnica, por lo que no se requiere validación clínica ni cumplimiento de normativa sanitaria para su desarrollo.
