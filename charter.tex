@@ -60,7 +60,7 @@
 			Revisión & \multicolumn{1}{c|}{\cellcolor[HTML]{C0C0C0}Detalles de los cambios realizados} & Fecha      \\ \hline
 			0      & Creación del documento                                 &\fechaInicioName \\ \hline
 			1      & Se completa hasta el punto 5 inclusive                 & 6 de septiembre de 2026 \\ \hline
-			%2      & Se completa hasta el punto 9 inclusive
+			2      & Se completa hasta el punto 9 inclusive                 & 13 de septiembre de 2026 \\ \hline
 			%		  Se puede agregar algo más \newline
 			%		  En distintas líneas \newline
 			%		  Así                                                    & {día} de {mes} de 202X \\ \hline
@@ -112,9 +112,9 @@
 	
 	Este proyecto surge como un trabajo individual de carácter exploratorio y aplicado, sin financiamiento externo ni acuerdos de confidencialidad asociados. La propuesta de valor del proyecto consiste en ofrecer una alternativa de bajo costo y sin fricción para obtener una estimación de signos vitales durante una consulta remota, dado que solo requiere una cámara. Esto habitualmente ya se encuentra disponible en el dispositivo que el paciente utiliza para acceder a la consulta. Se distingue de las soluciones basadas en sensores de contacto, que dependen de instrumental específico y no siempre está disponible fuera de un entorno clínico. El principal interesado en este tipo de solución es el profesional de la salud que realiza consultas de telemedicina, así como las plataformas que dan soporte a esta modalidad de atención, quienes valoran contar con información objetiva del paciente.
 	
-	El proyecto se encuentra en una etapa de prueba de concepto. En esta, se busca validar la viabilidad técnica de estimar la frecuencia cardíaca a partir de video, y a partir de esa misma señal, obtener una estimación de la frecuencia respiratoria. Para ello, se compara el desempeño de un enfoque clásico y uno basado en \textit{deep learning} sobre datasets públicos reconocidos en la literatura de rPPG. Estos enfoques serán contrastados con mediciones de referencia obtenidas con sensores de contacto.
+	El proyecto se encuentra en una etapa de prueba de concepto. En esta, se busca validar la viabilidad técnica de estimar la frecuencia cardíaca a partir de video, y a partir de esa misma señal, obtener una estimación de la frecuencia respiratoria. Para ello, se comparará el desempeño de un enfoque clásico y uno basado en \textit{deep learning} sobre datasets públicos reconocidos en la literatura de rPPG. Estos enfoques serán contrastados con mediciones de referencia obtenidas con sensores de contacto.
 	
-	La solución propuesta toma como entrada un video del rostro de la persona capturado con una cámara convencional, y produce como salida una estimación numérica de la frecuencia cardíaca y respiratoria, que pueden contrastarse contra una medición de referencia. En la figura \ref{fig:diagBloques} se presenta el diagrama en bloques del sistema. Se observa que, en primer lugar, se realiza la detección facial y la selección de una región de interés (ROI) sobre el video de entrada. Luego, se extrae una única señal fisiológica (rPPG), ya sea mediante un pipeline clásico de procesamiento de imagen o mediante un modelo de \textit{deep learning} de tipo espacio-temporal. A continuación, dicha señal se filtra en dos bandas de frecuencia distintas, a partir de las cuales se estiman la frecuencia cardíaca y la frecuencia respiratoria (mediante análisis espectral o directamente a la salida del modelo). Finalmente, los valores estimados se comparan contra las mediciones de los sensores de referencia a los fines de validar el desempeño del sistema.
+	La solución propuesta toma como entrada un video del rostro de la persona capturado con una cámara convencional, y produce como salida una estimación numérica de la frecuencia cardíaca y respiratoria, que pueden contrastarse contra una medición de referencia. En la figura \ref{fig:diagBloques} se presenta el diagrama en bloques del sistema. Se observa que, en primer lugar, se realiza la detección facial y la selección de una región de interés (ROI) sobre el video de entrada. Luego, se extrae una única señal fisiológica (rPPG), ya sea mediante un pipeline clásico de procesamiento de imagen o mediante un modelo de \textit{deep learning} de tipo espacio-temporal. A continuación, dicha señal se filtra en dos bandas de frecuencia distintas, a partir de las que se estiman la frecuencia cardíaca y la frecuencia respiratoria (mediante análisis espectral o directamente a la salida del modelo). Finalmente, los valores estimados se comparan contra las mediciones de los sensores de referencia a los fines de validar el desempeño del sistema.
 	
 	\begin{figure}[htpb]
 		\centering 
@@ -190,110 +190,146 @@
 	\section{6. Requerimientos}
 	\label{sec:requerimientos}
 	
-	\begin{consigna}{red} % ELIMINAR \begin{consigna}{red} y \end{consigna}{red} en las secciones que vayan completando para cada entrega parcial.
-		Los requerimientos deben enumerarse y de ser posible estar agrupados por afinidad, por ejemplo:
-		
+	Los requerimientos se agrupan en cinco categorías: funcionales, de desempeño, de datos y validación, de documentación, y regulatorios/éticos.
+	
+	\begin{enumerate}
+		\item Requerimientos funcionales
 		\begin{enumerate}
-			\item Requerimientos funcionales:
-			\begin{enumerate}
-				\item El sistema debe...
-				\item Tal componente debe...
-				\item El usuario debe poder...
-			\end{enumerate}
-			\item Requerimientos de documentación:
-			\begin{enumerate}
-				\item Requerimiento 1.
-				\item Requerimiento 2 (prioridad menor)
-			\end{enumerate}
-			\item Requerimiento de testing...
-			\item Requerimientos de la interfaz...
-			\item Requerimientos interoperabilidad...
-			\item etc...
+			\item El sistema debe detectar el rostro de la persona en al menos el 95\% de los \textit{frames} de un video con iluminación estable. (Prioridad: alta)
+			\item El sistema debe extraer una señal fisiológica (rPPG) a partir de la región de interés (ROI) facial detectada. (Prioridad: alta)
+			\item El sistema debe estimar la frecuencia cardíaca (HR) del sujeto, expresada en latidos por minuto (bpm). (Prioridad: alta)
+			\item El sistema debe estimar la frecuencia respiratoria (RR) del sujeto, expresada en respiraciones por minuto, a partir de la misma señal utilizada para estimar la HR. (Prioridad: alta)
+			\item El sistema debe implementar un \textit{pipeline} clásico de estimación (sin \textit{deep learning}) como línea base de comparación. (Prioridad: alta)
+			\item El sistema debe implementar al menos un modelo de \textit{deep learning} de tipo espacio-temporal para la estimación de la HR. (Prioridad: alta)
+			\item El sistema debe poder procesar, en modo \textit{offline}, videos provenientes de los datasets públicos seleccionados. (Prioridad: alta)
+			\item El sistema podrá, de forma opcional, procesar video capturado en vivo desde una cámara web con fines exploratorios. (Prioridad: baja, opcional)
 		\end{enumerate}
-		
-		Leyendo los requerimientos se debe poder interpretar cómo será el proyecto y su funcionalidad.
-		
-		Indicar claramente cuál es la prioridad entre los distintos requerimientos y si hay requerimientos opcionales. 
-		
-		\textbf{¡¡¡No olvidarse de que los requerimientos incluyen a las regulaciones y normas vigentes!!!}
-		
-		Y al escribirlos seguir las siguientes reglas:
-		\begin{itemize}
-			\item Ser breve y conciso (nadie lee cosas largas). 
-			\item Ser específico: no dejar lugar a confusiones.
-			\item Expresar los requerimientos en términos que sean cuantificables y medibles.
-		\end{itemize}
-		
-	\end{consigna} % ELIMINAR \begin{consigna}{red} y \end{consigna}{red} en las secciones que vayan completando para cada entrega parcial.
+		\item Requerimientos de desempeño
+		\begin{enumerate}
+			\item La estimación de HR, tanto del \textit{pipeline} clásico como del modelo de \textit{deep learning}, debe alcanzar un error absoluto medio (MAE) no mayor a 5 bpm sobre el dataset UBFC-rPPG. (Prioridad: alta)
+			\item El coeficiente de correlación de Pearson entre la HR estimada y la HR de referencia debe ser mayor a 0,8 sobre el dataset UBFC-rPPG. (Prioridad: media)
+			\item El tiempo de procesamiento de un video de un minuto de duración, en modo \textit{offline}, no debe superar los dos minutos sobre el hardware disponible para el proyecto. (Prioridad: baja)
+		\end{enumerate}
+		\item Requerimientos de datos y validación
+		\begin{enumerate}
+			\item El sistema debe evaluarse, como mínimo, sobre el dataset UBFC-rPPG. (Prioridad: alta)
+			\item De contar con tiempo suficiente, el sistema debe evaluarse adicionalmente sobre el dataset PURE. (Prioridad: media, opcional)
+			\item El conjunto de datos utilizado para entrenamiento y el de evaluación deben mantenerse disjuntos, sin superposición de sujetos. (Prioridad: alta)
+		\end{enumerate}
+		\item Requerimientos de documentación
+		\begin{enumerate}
+			\item Se debe documentar la arquitectura del \textit{pipeline} clásico y del modelo de \textit{deep learning} utilizados. (Prioridad: alta)
+			\item Se deben documentar las métricas obtenidas y las condiciones bajo las cuales se obtuvieron. (Prioridad: alta)
+			\item Se deben documentar las limitaciones identificadas del sistema y sus condiciones de uso válidas. (Prioridad: media)
+		\end{enumerate}
+		\item Requerimientos regulatorios y éticos
+		\begin{enumerate}
+			\item El proyecto debe utilizar exclusivamente datasets públicos que cuenten con consentimiento informado de los sujetos y licencia de uso académico o de investigación. (Prioridad: alta)
+			\item El sistema no debe presentarse ni utilizarse como un dispositivo médico certificado, dado que no cuenta con validación clínica ni aprobación regulatoria. (Prioridad: alta)
+		\end{enumerate}
+	\end{enumerate}
 	
 	\section{7. Historias de usuarios (\textit{Product backlog})}
 	\label{sec:backlog}
 	
-	\begin{consigna}{red}
-		Descripción: en esta sección se deben incluir las historias de usuarios y su ponderación (\textit{history points}). Recordar que las historias de usuarios son descripciones cortas y simples de una característica contada desde la perspectiva de la persona que desea la nueva capacidad, generalmente un usuario o cliente del sistema. La ponderación es un número entero que representa el tamaño de la historia comparada con otras historias de similar tipo.
+Los \textit{story points} de cada historia se calculan como la suma de tres subpuntajes, cada uno en una escala de 1 a 5: complejidad, dificultad e incertidumbre.
+
+	\begin{enumerate}
+		\item ``Como investigador, quiero implementar la detección facial y la selección de la región de interés (ROI) sobre un video, para poder aislar la zona de piel relevante para la estimación de la señal fisiológica."
 		
-		Se debe indicar explícitamente el criterio para calcular los \textit{story points} de cada historia.
+		\textit{Story points}: 5 (complejidad: 2, dificultad: 2, incertidumbre: 1)
 		
-		El formato propuesto es: 
-		\begin{enumerate}
-			\item ``Como [rol] quiero [tal cosa] para [tal otra cosa]."
-			
-			\textit{Story points}: 8 (complejidad: 3, dificultad: 2, incertidumbre: 3)
-		\end{enumerate}
-	\end{consigna}
+		\item ``Como investigador, quiero extraer la señal rPPG mediante un \textit{pipeline} clásico de procesamiento de imagen, para contar con una línea base de comparación."
+		
+		\textit{Story points}: 8 (complejidad: 3, dificultad: 3, incertidumbre: 2)
+		
+		\item ``Como investigador, quiero estimar la frecuencia cardíaca a partir de la señal rPPG mediante análisis espectral, para validar la viabilidad del enfoque clásico."
+		
+		\textit{Story points}: 5 (complejidad: 2, dificultad: 2, incertidumbre: 1)
+		
+		\item ``Como investigador, quiero estimar la frecuencia respiratoria a partir de la misma señal rPPG utilizada para la frecuencia cardíaca, para evaluar la viabilidad de obtener ambas variables sin duplicar el \textit{pipeline} de captura."
+		
+		\textit{Story points}: 5 (complejidad: 2, dificultad: 1, incertidumbre: 2)
+		
+		\item ``Como investigador, quiero implementar o adaptar un modelo de \textit{deep learning} de tipo espacio-temporal, para estimar la frecuencia cardíaca directamente a partir del video."
+		
+		\textit{Story points}: 13 (complejidad: 5, dificultad: 4, incertidumbre: 4)
+		
+		\item ``Como investigador, quiero entrenar el modelo de \textit{deep learning} sobre el dataset UBFC-rPPG, para contar con un modelo ajustado a datos reales de referencia."
+		
+		\textit{Story points}: 8 (complejidad: 3, dificultad: 3, incertidumbre: 2)
+		
+		\item ``Como investigador, quiero calcular las métricas de error (MAE, RMSE, correlación de Pearson) entre las estimaciones y las mediciones de referencia, para poder comparar objetivamente ambos enfoques."
+		
+		\textit{Story points}: 5 (complejidad: 2, dificultad: 2, incertidumbre: 1)
+		
+		\item ``Como investigador, quiero documentar los resultados obtenidos y las limitaciones identificadas, para dejar registro de las condiciones de uso válidas del sistema."
+		
+		\textit{Story points}: 3 (complejidad: 1, dificultad: 1, incertidumbre: 1)
+		
+		\item ``Como profesional de la salud, quiero que el sistema entregue una estimación numérica clara de la frecuencia cardíaca y respiratoria, para poder interpretarla rápidamente en una demostración del sistema."
+		
+		\textit{Story points}: 5 (complejidad: 2, dificultad: 2, incertidumbre: 1)
+	\end{enumerate}
 	
 	\section{8. Entregables principales del proyecto}
 	\label{sec:entregables}
 	
-	\begin{consigna}{red}
-		Los entregables del proyecto son (ejemplo):
-		
-		\begin{itemize}
-			\item Manual de usuario.
-			\item Diagrama de circuitos esquemáticos.
-			\item Código fuente del firmware.
-			\item Diagrama de instalación.
-			\item Memoria del trabajo final.
-			\item etc...
-		\end{itemize}
-	\end{consigna}
+	Los entregables del proyecto son:
+	
+	\begin{itemize}
+		\item Código fuente del \textit{pipeline} clásico de estimación de frecuencia cardíaca y respiratoria.
+		\item Código fuente y pesos entrenados del modelo de \textit{deep learning}.
+		\item Script de evaluación y comparación de métricas (MAE, RMSE, correlación de Pearson) entre ambos enfoques.
+		\item Reporte de resultados, con las limitaciones identificadas y las condiciones de uso válidas del sistema.
+		\item Memoria del trabajo final.
+		\item Presentación para la defensa pública del trabajo.
+	\end{itemize}
 	
 	\section{9. Desglose del trabajo en tareas}
 	\label{sec:wbs}
 	
-	\begin{consigna}{red}
-		El WBS debe tener relación directa o indirecta con los requerimientos.  Son todas las actividades que se harán en el proyecto para dar cumplimiento a los requerimientos. Se recomienda mostrar el WBS mediante una lista indexada:
-		
+	\begin{enumerate}
+		\item Relevamiento y diseño (60 h)
 		\begin{enumerate}
-			\item Grupo de tareas 1 (suma h)
-			\begin{enumerate}
-				\item Tarea 1 (tantas h)
-				\item Tarea 2 (tantas h)
-				\item Tarea 3 (tantas h)
-			\end{enumerate}
-			\item Grupo de tareas 2 (suma h)
-			\begin{enumerate}
-				\item Tarea 1 (tantas h)
-				\item Tarea 2 (tantas h)
-				\item Tarea 3 (tantas h)
-			\end{enumerate}
-			\item Grupo de tareas 3 (suma h)
-			\begin{enumerate}
-				\item Tarea 1 (tantas h)
-				\item Tarea 2 (tantas h)
-				\item Tarea 3 (tantas h)
-				\item Tarea 4 (tantas h)
-				\item Tarea 5 (tantas h)
-			\end{enumerate}
+			\item Revisión del estado del arte en rPPG (20 h)
+			\item Selección y descarga de datasets públicos (10 h)
+			\item Definición de la arquitectura del \textit{pipeline} clásico y del modelo de \textit{deep learning} (20 h)
+			\item Definición de las métricas de evaluación (10 h)
 		\end{enumerate}
-		
-		Cantidad total de horas: tantas.
-		
-		\textbf{¡Importante!:} la unidad de horas es h y va separada por espacio del número. Es incorrecto escribir ``23hs".
-		
-		\textbf{Se recomienda que no haya ninguna tarea que lleve más de 40 h.} De ser así se recomienda dividirla en tareas de menor duración.
-		
-	\end{consigna}
+		\item Implementación del \textit{pipeline} clásico (120 h)
+		\begin{enumerate}
+			\item Implementación de la detección facial y selección de ROI (30 h)
+			\item Implementación de la extracción de la señal rPPG (30 h)
+			\item Implementación del filtrado y la estimación espectral de la HR (30 h)
+			\item Implementación del filtrado y la estimación espectral de la RR (30 h)
+		\end{enumerate}
+		\item Implementación y entrenamiento del modelo de \textit{deep learning} (180 h)
+		\begin{enumerate}
+			\item Preprocesamiento de datos para el entrenamiento (30 h)
+			\item Implementación de la arquitectura del modelo (40 h)
+			\item Entrenamiento del modelo (40 h)
+			\item Ajuste de hiperparámetros (40 h)
+			\item Validación del modelo sobre el conjunto de test (30 h)
+		\end{enumerate}
+		\item Evaluación y comparación de enfoques (100 h)
+		\begin{enumerate}
+			\item Cálculo de métricas de error (MAE, RMSE) (30 h)
+			\item Cálculo del coeficiente de correlación de Pearson (20 h)
+			\item Análisis comparativo entre el \textit{pipeline} clásico y el modelo de \textit{deep learning} (30 h)
+			\item Identificación de limitaciones y condiciones de uso válidas (20 h)
+		\end{enumerate}
+		\item Documentación y cierre (140 h)
+		\begin{enumerate}
+			\item Redacción de la primera versión de la memoria del trabajo final (30 h)
+			\item Revisión y correcciones sugeridas por el director (40 h)
+			\item Redacción de la versión final de la memoria (30 h)
+			\item Preparación de la presentación para la defensa pública (20 h)
+			\item Ensayo de la defensa pública (20 h)
+		\end{enumerate}
+	\end{enumerate}
+	
+	Cantidad total de horas: 600 h.
 	
 	\section{10. Diagrama de Activity On Node}
 	\label{sec:AoN}
