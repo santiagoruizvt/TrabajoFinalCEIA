@@ -66,7 +66,7 @@
 			%		  En distintas líneas \newline
 			%		  Así                                                    & {día} de {mes} de 202X \\ \hline
 			%3      & Se completa hasta el punto 12 inclusive                & {día} de {mes} de 202X \\ \hline
-			%4      & Se completa el plan	                                 & {día} de {mes} de 202X \\ \hline
+			4      & Se completa el plan	                                & 27 de septiembre de 2026 \\ \hline
 			
 			% Si hay más correcciones pasada la versión 4 también se deben especificar acá
 			
@@ -459,113 +459,168 @@ En la figura \ref{fig:diagGantt} se presenta el diagrama de Gantt correspondient
 	\section{13. Gestión de riesgos}
 	\label{sec:riesgos}
 	
-	\begin{consigna}{red}
-		a) Identificación de los riesgos (al menos cinco) y estimación de sus consecuencias:
-		
-		Riesgo 1: detallar el riesgo (riesgo es algo que si ocurre altera los planes previstos de forma negativa)
-		\begin{itemize}
-			\item Severidad (S): mientras más severo, más alto es el número (usar números del 1 al 10).\\
-			Justificar el motivo por el cual se asigna determinado número de severidad (S).
-			\item Probabilidad de ocurrencia (O): mientras más probable, más alto es el número (usar del 1 al 10).\\
-			Justificar el motivo por el cual se asigna determinado número de (O). 
-		\end{itemize}   
-		
-		Riesgo 2:
-		\begin{itemize}
-			\item Severidad (S): X.\\
-			Justificación...
-			\item Ocurrencia (O): Y.\\
-			Justificación...
-		\end{itemize}
-		
-		Riesgo 3:
-		\begin{itemize}
-			\item Severidad (S):  X.\\
-			Justificación...
-			\item Ocurrencia (O): Y.\\
-			Justificación...
-		\end{itemize}
-		
-		
-		b) Tabla de gestión de riesgos:      (El RPN se calcula como RPN=SxO)
-		
-		\begin{table}[htpb]
-			\centering
-			\begin{tabularx}{\linewidth}{@{}|X|c|c|c|c|c|c|@{}}
-				\hline
-				\rowcolor[HTML]{C0C0C0} 
-				Riesgo & S & O & RPN & S* & O* & RPN* \\ \hline
-				&   &   &     &    &    &      \\ \hline
-				&   &   &     &    &    &      \\ \hline
-				&   &   &     &    &    &      \\ \hline
-				&   &   &     &    &    &      \\ \hline
-				&   &   &     &    &    &      \\ \hline
-			\end{tabularx}%
-		\end{table}
-		
-		Criterio adoptado: 
-		
-		Se tomarán medidas de mitigación en los riesgos cuyos números de RPN sean mayores a...
-		
-		Nota: los valores marcados con (*) en la tabla corresponden luego de haber aplicado la mitigación.
-		
-		c) Plan de mitigación de los riesgos que originalmente excedían el RPN máximo establecido:
-		
-		Riesgo 1: plan de mitigación (si por el RPN fuera necesario elaborar un plan de mitigación).
-		Nueva asignación de S y O, con su respectiva justificación:
-		\begin{itemize}
-			\item Severidad (S*): mientras más severo, más alto es el número (usar números del 1 al 10).
-			Justificar el motivo por el cual se asigna determinado número de severidad (S).
-			\item Probabilidad de ocurrencia (O*): mientras más probable, más alto es el número (usar del 1 al 10).
-			Justificar el motivo por el cual se asigna determinado número de (O).
-		\end{itemize}
-		
-		Riesgo 2: plan de mitigación (si por el RPN fuera necesario elaborar un plan de mitigación).
-		
-		Riesgo 3: plan de mitigación (si por el RPN fuera necesario elaborar un plan de mitigación).
-		
-	\end{consigna}
+	\textbf{a)} Identificación de los riesgos y estimación de sus consecuencias. La severidad (S) y la probabilidad de ocurrencia (O) se califican de 1 a 10.
+	
+	\textbf{Riesgo 1: el modelo de \textit{deep learning} no generaliza a condiciones fuera de laboratorio.}
+	\begin{itemize}
+		\item Severidad (S): 7. La brecha de rendimiento entre condiciones controladas y escenarios reales está ampliamente documentada en la literatura de rPPG (ver Sección 1). Si se concretara, el sistema podría no cumplir el requerimiento de $MAE \leq 5$ bpm (Sección 6) fuera del dataset de evaluación.
+		\item Probabilidad de ocurrencia (O): 6. Es un riesgo conocido y frecuente en esta técnica, y más al tratarse de una primera implementación sin optimización extensiva.
+	\end{itemize}
+	
+	\textbf{Riesgo 2: carencia o degradación del acceso a GPU en la nube durante el entrenamiento.}
+	\begin{itemize}
+		\item Severidad (S): 6. Afectaría directamente el grupo 3 del WBS (Implementación y entrenamiento del modelo de \textit{deep learning}), que se encuentra en el camino crítico del proyecto (Sección 10).
+		\item Probabilidad de ocurrencia (O): 6. El nivel gratuito de plataformas como Google Colab tiene límites de uso y cortes de sesión variables y no garantizados.
+	\end{itemize}
+	
+	\textbf{Riesgo 3: atraso en el cronograma por tratarse de un único responsable.}
+	\begin{itemize}
+		\item Severidad (S): 8. Al no existir un equipo que permita redistribuir tareas, cualquier atraso en una actividad del camino crítico impacta directamente en la fecha de finalización del proyecto.
+		\item Probabilidad de ocurrencia (O): 5. El autor combina el desarrollo del proyecto con otras actividades laborales y académicas, lo que hace probable alguna semana de menor dedicación.
+	\end{itemize}
+	
+	\textbf{Riesgo 4: calidad o representatividad insuficiente de los datasets públicos utilizados.}
+	\begin{itemize}
+		\item Severidad (S): 6. Una baja diversidad de sujetos o tonos de piel en UBFC-rPPG y PURE podría afectar la validez de las métricas obtenidas y la generalización del modelo.
+		\item Probabilidad de ocurrencia (O): 4. Ambos datasets son ampliamente utilizados y validados en la literatura de rPPG (Sección 1), lo que reduce este riesgo.
+	\end{itemize}
+	
+	\textbf{Riesgo 5: dificultad para comparar el \textit{pipeline} clásico y el modelo de \textit{deep learning} bajo las mismas condiciones.}
+	\begin{itemize}
+		\item Severidad (S): 5. De no definirse un protocolo de evaluación común, la comparación entre ambos enfoques (Sección 3) perdería validez.
+		\item Probabilidad de ocurrencia (O): 4. Es un riesgo moderado, mitigable con una adecuada planificación desde el inicio del proyecto (Sección 6, requerimientos de datos y validación).
+	\end{itemize}
+	
+	\textbf{b)} Tabla de gestión de riesgos (RPN = S $\times$ O):
+	
+	\begin{table}[htpb]
+		\centering
+		\begin{tabularx}{\linewidth}{@{}|X|c|c|c|c|c|c|@{}}
+			\hline
+			\rowcolor[HTML]{C0C0C0} 
+			Riesgo & S & O & RPN & S* & O* & RPN* \\ \hline
+			R1. El modelo de DL no generaliza fuera de laboratorio & 7 & 6 & 42 & 7 & 3 & 21 \\ \hline
+			R2. Indisponibilidad de GPU en la nube             & 6 & 6 & 36 & 6 & 3 & 18 \\ \hline
+			R3. Atraso de cronograma (único responsable)        & 8 & 5 & 40 & 8 & 3 & 24 \\ \hline
+			R4. Calidad/representatividad de los datasets       & 6 & 4 & 24 & -  & -  & -  \\ \hline
+			R5. Comparación no homogénea entre enfoques         & 5 & 4 & 20 & -  & -  & -  \\ \hline
+		\end{tabularx}%
+	\end{table}
+	
+	Criterio adoptado: se tomarán medidas de mitigación obligatorias en los riesgos cuyo RPN sea mayor o igual a 35 (R1, R2 y R3). Los valores marcados con (*) corresponden a la estimación luego de aplicar la mitigación.
+	
+	\textbf{c)} Plan de mitigación de los riesgos que exceden el umbral
+	
+	\textbf{R1 (RPN 42 $\rightarrow$ RPN* 21).} Se aplicará aumento de datos (\textit{data augmentation}) sobre variaciones de brillo, contraste y ruido durante el entrenamiento del modelo. Se documentarán explícitamente las condiciones de uso válidas del sistema (Sección 6, requerimientos de documentación). De ser posible, se validará adicionalmente con una pequeña captura propia en condiciones distintas a las del dataset de entrenamiento. Esto no reduce la severidad del riesgo en caso de ocurrir (S*=7), pero sí su probabilidad (O*=3), al mitigar preventivamente sus causas más frecuentes.
+	
+	\textbf{R2 (RPN 36 $\rightarrow$ RPN* 18).} Se utilizarán \textit{checkpoints} periódicos durante el entrenamiento del modelo para poder reanudarlo sin pérdida de avance ante un corte de sesión. Se evaluará reducir el tamaño de \textit{batch} o del modelo si la disponibilidad de GPU se ve restringida. Esto reduce la probabilidad de impacto real sobre el cronograma (O*=3).
+	
+	\textbf{R3 (RPN 40 $\rightarrow$ RPN* 24).} El cronograma (Sección 11) ya contempla una holgura considerable entre la finalización del trabajo técnico y la fecha de defensa pública. Esto funciona como margen de contingencia ante atrasos. Adicionalmente, se establecerán hitos intermedios verificables semanalmente y se priorizarán las tareas identificadas sobre el camino crítico (Sección 10) frente a las que cuentan con holgura. Esto reduce la probabilidad de que un atraso puntual comprometa la fecha final (O*=3), aunque la severidad de un atraso mayor sigue siendo alta (S*=8).
 	
 	
 	\section{14. Gestión de la calidad}
 	\label{sec:calidad}
 	
-	\begin{consigna}{red}
-		Elija al menos diez requerimientos que a su criterio sean los más importantes/críticos/que aportan más valor y para cada uno de ellos indique las acciones de verificación y validación que permitan asegurar su cumplimiento.
-		
-		\begin{itemize} 
-			\item Req \#1: copiar acá el requerimiento con su correspondiente número.
-			
-			\begin{itemize}
-				\item Verificación para confirmar si se cumplió con lo requerido antes de mostrar el sistema al cliente. Detallar.
-				\item Validación con el cliente para confirmar que está de acuerdo en que se cumplió con lo requerido. Detallar. 
-			\end{itemize}
-			
+	A continuación se seleccionan doce requerimientos de la Sección 6, considerados críticos por su impacto directo en el cumplimiento del propósito del proyecto, y se detallan para cada uno las acciones de verificación (caja blanca) y de validación (caja negra).
+	
+	\begin{itemize}
+		\item \textbf{Detección facial en al menos el 95\% de los \textit{frames} con iluminación estable.}
+		\begin{itemize}
+			\item Verificación: se ejecuta el detector sobre el conjunto de videos de UBFC-rPPG y se calcula automáticamente el porcentaje de \textit{frames} con detección exitosa.
+			\item Validación: se revisan junto con el director muestras de video con la detección superpuesta, confirmando que el criterio se cumple de forma consistente.
 		\end{itemize}
 		
-		Tener en cuenta que en este contexto se pueden mencionar simulaciones, cálculos, revisión de hojas de datos, consulta con expertos, mediciones, etc.  
+		\item \textbf{Extracción de una señal fisiológica (rPPG) a partir de la ROI facial.}
+		\begin{itemize}
+			\item Verificación: se inspecciona visualmente la señal extraída, confirmando que exhibe una componente periódica compatible con el pulso cardíaco esperado.
+			\item Validación: se contrasta la periodicidad observada con la frecuencia cardíaca de referencia del dataset, sin discrepancias evidentes.
+		\end{itemize}
 		
-		Las acciones de verificación suelen considerar al entregable como ``caja blanca'', es decir se conoce en profundidad su funcionamiento interno.  
+		\item \textbf{Estimación de la frecuencia cardíaca (HR).}
+		\begin{itemize}
+			\item Verificación: se calcula el MAE y el RMSE entre la HR estimada y la de referencia sobre el conjunto de evaluación.
+			\item Validación: se presentan al director los resultados junto con ejemplos de estimaciones individuales, confirmando su razonabilidad clínica (valores dentro de rangos fisiológicos plausibles).
+		\end{itemize}
 		
-		En cambio, las acciones de validación suelen considerar al entregable como ``caja negra'', es decir, que no se conocen los detalles de su funcionamiento interno.
+		\item \textbf{Estimación de la frecuencia respiratoria (RR) a partir de la misma señal utilizada para la HR.}
+		\begin{itemize}
+			\item Verificación: se calcula el error de la RR estimada contra una referencia disponible y se confirma que no se haya duplicado el \textit{pipeline} de captura.
+			\item Validación: se revisa con el director si el enfoque de derivar la RR de la misma señal rPPG resulta metodológicamente aceptable para el alcance del trabajo.
+		\end{itemize}
 		
-	\end{consigna}
+		\item \textbf{Implementación de un \textit{pipeline} clásico como línea base.}
+		\begin{itemize}
+			\item Verificación: pruebas unitarias sobre cada etapa del \textit{pipeline} (detección, ROI, filtrado, estimación espectral).
+			\item Validación: el director revisa que el \textit{pipeline} sea reproducible de punta a punta con un comando o script único.
+		\end{itemize}
+		
+		\item \textbf{Implementación de un modelo de \textit{deep learning} espacio-temporal.}
+		\begin{itemize}
+			\item Verificación: se confirma que el modelo entrena sin errores y que su arquitectura corresponde a lo documentado (Sección 6, requerimientos de documentación).
+			\item Validación: el director revisa el código y la arquitectura, confirmando su correspondencia con el estado del arte relevado en la Sección 1.
+		\end{itemize}
+		
+		\item \textbf{MAE de HR no mayor a 5 bpm sobre UBFC-rPPG.}
+		\begin{itemize}
+			\item Verificación: cálculo automático del MAE sobre el conjunto de evaluación completo, para ambos enfoques.
+			\item Validación: el director revisa el resultado junto con el análisis comparativo de la Sección 9 (grupo 4), aceptando el cumplimiento del umbral.
+		\end{itemize}
+		
+		\item \textbf{Coeficiente de correlación de Pearson mayor a 0,8 sobre UBFC-rPPG.}
+		\begin{itemize}
+			\item Verificación: cálculo automático del coeficiente sobre el conjunto de evaluación completo.
+			\item Validación: el director revisa el resultado y su consistencia con el MAE obtenido para el mismo enfoque.
+		\end{itemize}
+		
+		\item \textbf{Evaluación sobre, como mínimo, el dataset UBFC-rPPG.}
+		\begin{itemize}
+			\item Verificación: se confirma que el reporte de resultados incluye métricas calculadas sobre la totalidad de los sujetos del dataset.
+			\item Validación: el director confirma que no se hayan excluido sujetos sin justificación documentada.
+		\end{itemize}
+		
+		\item \textbf{Conjuntos de entrenamiento y evaluación disjuntos, sin superposición de sujetos.}
+		\begin{itemize}
+			\item Verificación: se inspecciona el \textit{script} de partición de datos, confirmando de forma automática la ausencia de sujetos compartidos entre conjuntos.
+			\item Validación: el director revisa el criterio de partición utilizado y su justificación metodológica.
+		\end{itemize}
+		
+		\item \textbf{Documentación de la arquitectura de ambos enfoques y de las métricas obtenidas.}
+		\begin{itemize}
+			\item Verificación: se revisa que la memoria del trabajo final incluya el detalle completo de ambas arquitecturas y de las condiciones de prueba.
+			\item Validación: el director confirma que la documentación es suficiente para que un tercero pueda reproducir el trabajo.
+		\end{itemize}
+		
+		\item \textbf{Uso exclusivo de datasets públicos con consentimiento informado y licencia académica.}
+		\begin{itemize}
+			\item Verificación: se revisan los términos de licencia y uso de UBFC-rPPG y PURE, confirmando su compatibilidad con un uso académico y no comercial.
+			\item Validación: el director confirma que no existen objeciones éticas ni regulatorias sobre las fuentes de datos utilizadas.
+		\end{itemize}
+	\end{itemize}
+	
+	Las acciones de verificación descriptas se automatizan, en la medida de lo posible, mediante \textit{scripts} de cálculo de métricas. Las acciones de validación en su mayoría se revisarán con el director.
 	
 	\section{15. Procesos de cierre}    
 	\label{sec:cierre}
 	
-	\begin{consigna}{red}
-		Establecer las pautas de trabajo para realizar una reunión final de evaluación del proyecto, tal que contemple las siguientes actividades:
-		
-		\begin{itemize}
-			\item Pautas de trabajo que se seguirán para analizar si se respetó el Plan de Proyecto original:\\
-			- Indicar quién se ocupará de hacer esto y cuál será el procedimiento a aplicar. 
-			\item Identificación de las técnicas y procedimientos útiles e inútiles que se emplearon, los problemas que surgieron y cómo se solucionaron:\\
-			- Indicar quién se ocupará de hacer esto y cuál será el procedimiento para dejar registro.
-			\item Indicar quién organizará el acto de agradecimiento a todos los interesados, y en especial al equipo de trabajo y colaboradores:\\
-			- Indicar esto y quién financiará los gastos correspondientes.
-		\end{itemize}
-		
-	\end{consigna}
+	Se establece el siguiente procedimiento para la reunión final de evaluación del proyecto, con el objetivo de verificar el cumplimiento del plan, cerrar administrativamente el trabajo y dejar registro de las lecciones aprendidas.
+	
+	\textbf{Participantes convocados:} el Responsable (autor), el Orientador (director del Trabajo Final) y, en la instancia de defensa pública, los jurados evaluadores designados.
+	
+	\textbf{Preparación previa.} El Responsable congela el repositorio del proyecto con una etiqueta de versión final, reúne los entregables definidos en la Sección 8 y compila la evidencia necesaria para la reunión. Esta evidencia tendrá los resultados de las métricas de calidad (Sección 14), cronograma planificado versus ejecutado (Secciones 10 y 11), presupuesto ejecutado versus el presupuesto de la Sección 12, y el estado final de los riesgos identificados en la Sección 13. El Orientador revisa esta documentación con antelación y envía comentarios.
+	
+	\textbf{a) Pautas para analizar si se respetó el Plan de Proyecto original.} El Responsable presenta la comparación y el Orientador la revisa, siguiendo el siguiente procedimiento:
+	\begin{itemize}
+		\item Alcance: se contrasta lo efectivamente implementado contra lo definido en la Sección 4, indicando si algún punto del alcance no se cumplió y su justificación.
+		\item Cronograma: se compara la duración planificada en el diagrama de Gantt (Sección 11) contra las fechas reales de cada grupo del WBS, documentando las causas de los desvíos, en caso de existir.
+		\item Presupuesto: se compara el costo ejecutado contra el presupuesto detallado en la Sección 12, expresando la variación en USD y en términos porcentuales.
+		\item Calidad: se revisa el cumplimiento de los requerimientos críticos identificados en la Sección 14, en base a los resultados de verificación y validación obtenidos.
+	\end{itemize}
+	Como resultado de este análisis, se labra una breve acta de evaluación del plan, indicando si el proyecto cumple, cumple parcialmente o no cumple con lo planificado, junto con los desvíos justificados.
+	
+	\textbf{b) Identificación de técnicas y procedimientos útiles e inútiles, problemas y soluciones.} El Responsable registra esta información en un informe de lecciones aprendidas, utilizando una retrospectiva estructurada (qué continuar, qué dejar de hacer, qué empezar a hacer) sobre los principales hitos del proyecto (selección de arquitectura, entrenamiento del modelo, comparación de enfoques). El Orientador participa de esta instancia aportando su perspectiva sobre el proceso de trabajo conjunto. El informe queda documentado junto con la memoria del trabajo final, como antecedente para futuros trabajos relacionados dentro del área.
+	
+	\textbf{c) Organización del acto de agradecimiento.} El Responsable organiza un breve reconocimiento dirigido al Orientador por su acompañamiento durante el proyecto, en forma de una nota de agradecimiento y un intercambio informal posterior a la defensa pública. Al tratarse de un trabajo individual sin financiamiento externo, este agradecimiento no representa un gasto adicional a los ya contemplados en la Sección 12, y se realiza dentro de los 14 días posteriores a la defensa pública.
+	
+	\textbf{Cierre administrativo.} Finalmente, se archivan los entregables definidos en la Sección 8 junto con la memoria final del trabajo, y se procede a la entrega formal de la documentación al Orientador y a la carrera, dando por concluido el proyecto.
 	
 \end{document}
