@@ -335,7 +335,7 @@ Los \textit{story points} de cada historia se calculan como la suma de tres subp
 	\section{10. Diagrama de Activity On Node}
 	\label{sec:AoN}
 	
-	El diagrama de Activity on Node (AoN) se construye a partir de las 22 subtareas del desglose del trabajo (WBS) definido en la sección anterior, tomando como unidad de tiempo la hora. Se identificaron relaciones de precedencia que permiten ejecutar ciertas tareas en paralelo. Esto es razonable incluso cuando se trata de un proyecto ejecutado por una única persona, dado que el entrenamiento del modelo de \textit{deep learning} insume tiempo de cómputo en GPU durante el que se puede avanzar con otras tareas independientes, como la implementación del \textit{pipeline} clásico. Bajo este criterio, se definieron bifurcaciones paralelas en distintos puntos del proyecto.
+	El diagrama de Activity on Node (AoN) se construye a partir de las 22 subtareas del desglose del trabajo (WBS) definido en la sección anterior, tomando horas como unidad de tiempo. Se identificaron relaciones de precedencia que permiten ejecutar ciertas tareas en paralelo. Esto es razonable incluso cuando se trata de un proyecto ejecutado por una única persona, dado que el entrenamiento del modelo de \textit{deep learning} insume tiempo de cómputo en GPU durante el que se puede avanzar con otras tareas independientes, como la implementación del \textit{pipeline} clásico. Bajo este criterio, se definieron bifurcaciones paralelas en distintos puntos del proyecto.
 	
 	En la figura \ref{fig:AoN} se presenta el diagrama en bloques. Se observa que el camino crítico del proyecto, resaltado en rojo, atraviesa específicamente la rama del modelo de \textit{deep learning}. Dicha secuencia es la siguiente: 1.1 → 1.3 → 3.1 → 3.2 → 3.3 → 3.4 → 3.5 → 4.1 → 4.3 → 4.4 → 5.1 → 5.2 → 5.3 → 5.5. Esto se debe a que dicha rama insume más tiempo que la implementación del \textit{pipeline} clásico, que queda con una holgura considerable y podría demorarse sin afectar la fecha de finalización del proyecto.
 	
@@ -390,13 +390,13 @@ En la figura \ref{fig:diagGantt} se presenta el diagrama de Gantt correspondient
 				\ganttbar{4.2 Pearson}{2026-11-09}{2026-11-13} \\
 				\ganttbar{4.3 Análisis comparativo}{2026-11-19}{2026-11-27} \\
 				\ganttbar{4.4 Limitaciones}{2026-11-30}{2026-12-04} \\
-				\ganttgroup{5. Documentación y cierre}{2026-12-07}{2027-01-15} \\
+				\ganttgroup{5. Documentación y cierre}{2026-12-07}{2027-04-10} \\
 				\ganttbar{5.1 Redacción v1}{2026-12-07}{2026-12-16} \\
 				\ganttbar{5.2 Revisión director}{2026-12-17}{2026-12-30} \\
-				\ganttbar{5.3 Redacción final}{2026-12-31}{2027-01-08} \\
-				\ganttbar{5.4 Presentación}{2026-12-17}{2026-12-23} \\
-				\ganttbar{5.5 Ensayo defensa}{2027-01-11}{2027-01-15} \\
-				\ganttmilestone{Entrega memoria final}{2027-01-08} \\
+				\ganttbar{5.3 Redacción final}{2027-03-20}{2027-04-02} \\
+				\ganttbar{5.4 Presentación}{2027-03-01}{2027-03-10} \\
+				\ganttbar{5.5 Ensayo defensa}{2027-03-30}{2027-04-12} \\
+				\ganttmilestone{Entrega memoria final}{2027-03-15} \\
 				\ganttmilestone{Defensa pública}{2027-04-15} \\
 			\end{ganttchart}
 		\end{center}
@@ -409,7 +409,7 @@ En la figura \ref{fig:diagGantt} se presenta el diagrama de Gantt correspondient
 	\section{12. Presupuesto detallado del proyecto}
 	\label{sec:presupuesto}
 	
-		El presupuesto se expresa en dólares estadounidenses (USD), dado que constituye una referencia más estable para valorizar las horas de trabajo profesional. A modo de referencia, se indica la equivalencia en pesos argentinos (ARS) tomando la cotización del dólar informal del 4 de septiembre de 2026, de \$1.540 ARS por dólar.
+		El presupuesto se expresa en dólares estadounidenses (USD), dado que constituye una referencia más estable para valorizar las horas de trabajo profesional. Se indica la equivalencia en pesos argentinos (ARS) tomando la cotización del dólar oficial del Banco de la Nación Argentina (BNA) del 25 de septiembre de 2026, de \$1.545 ARS por dólar (valor de venta). 
 	
 	Los costos directos corresponden a la valorización de las 600 horas de trabajo estimadas en la sección 9, a una tarifa de referencia de USD 17 por hora para un perfil de ingeniería con especialización en inteligencia artificial. Los costos indirectos incluyen la amortización proporcional del equipo (notebook) utilizado durante el desarrollo y la conectividad a internet. Cabe destacar que las principales herramientas de software utilizadas (Python, PyTorch, OpenCV, MediaPipe) son de código abierto y no representan un costo adicional.
 	
@@ -453,7 +453,7 @@ En la figura \ref{fig:diagGantt} se presenta el diagrama de Gantt correspondient
 		\end{tabularx}%
 	\end{table}
 	
-	El monto total estimado equivale, a la cotización de referencia indicada, a aproximadamente ARS 16.000.600.
+	El monto total estimado equivale, a la cotización de referencia indicada, a aproximadamente ARS 16.052.550.
 	
 	
 	\section{13. Gestión de riesgos}
